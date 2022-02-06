@@ -1,6 +1,7 @@
-package com.draming.groophite.api.events;
+package com.draming.groophite.api.events.playerEvent;
 
 
+import com.draming.groophite.api.events.EntityEventHelper;
 import com.draming.groophite.groophite;
 import groovy.lang.Closure;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
@@ -10,14 +11,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 @Mod.EventBusSubscriber(modid = groophite.MODID)
-public class Groophite_PlayerContainerEvent extends Groophite_PlayerEvent {
+public class Groophite_PlayerContainerEvent{
     public static List<Closure> closures = new ArrayList<Closure>();
     public static PlayerContainerEvent event;
-
-    public Groophite_PlayerContainerEvent(){
-
-        //closures.add((Closure) defaultClosure.closure_loaded);
-    }
 
     public static void subscribeEvent(Closure closure){
         closures.add(closure);

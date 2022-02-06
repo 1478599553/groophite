@@ -1,15 +1,12 @@
 package com.draming.groophite.processor;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import com.draming.groophite.api.events.Groophite_PlayerContainerEvent;
+import com.draming.groophite.api.events.playerEvent.Groophite_PlayerContainerEvent;
 import com.draming.groophite.groophite;
 import groovy.lang.Closure;
-import org.codehaus.groovy.runtime.InvokerHelper;
 
 import groovy.lang.Binding;
 

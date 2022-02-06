@@ -1,5 +1,5 @@
 import com.draming.groophite.api.events.EntityEventHelper
-import com.draming.groophite.api.events.Groophite_PlayerContainerEvent
+import com.draming.groophite.api.events.playerEvent.Groophite_PlayerContainerEvent
 
 public class test3{
     public static void main (String[] args){

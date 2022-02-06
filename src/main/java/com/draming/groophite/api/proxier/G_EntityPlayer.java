@@ -9,6 +9,7 @@ public class G_EntityPlayer extends G_EntityLiving{
     private EntityPlayer player;
 
     public G_EntityPlayer(EntityPlayer player){
+        super(player);
         this.player = player;
     }
 

@@ -9,7 +9,7 @@
   "updateUrl": "",
   "authorList": ["Draming"],
   "credits": "",
-  "logoFile": "",
+  "logoFile": "assets/groophite/logo.png",
   "screenshots": [],
   "dependencies": []
 }
