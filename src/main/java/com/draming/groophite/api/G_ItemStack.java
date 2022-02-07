@@ -34,6 +34,9 @@ public class G_ItemStack {
         return this.__innerItemStack.getCount();
     }
 
+    public void setCount(int count){
+        this.__innerItemStack.setCount(count);
+    }
 
 
 }

@@ -14,5 +14,6 @@ public class RegisterManager {
         ResourceLocation theButton = new ResourceLocation("minecraft:wooden_button");
         IForgeRegistryModifiable modRegistry = (IForgeRegistryModifiable) event.getRegistry();
         modRegistry.remove(theButton);
+
     }
 }

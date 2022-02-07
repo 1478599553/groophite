@@ -38,9 +38,10 @@ public class GroovyProcessor {
 
         for (File key : script_files)
             {
-            groophite.logger.info("loaded script : " + key.getName());
+            groophite.logger.info("loading script : " + key.getName());
 
             GroovyScriptFactory.getInstance().scriptGetAndRun(key, binding);
+                groophite.logger.info("loaded script : " + key.getName());
             }
         }
     }

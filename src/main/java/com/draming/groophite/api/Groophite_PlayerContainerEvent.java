@@ -1,4 +1,4 @@
-package com.draming.groophite.api.events.playerEvent;
+package com.draming.groophite.api;
 
 
 import com.draming.groophite.api.EntityEventHelper;
