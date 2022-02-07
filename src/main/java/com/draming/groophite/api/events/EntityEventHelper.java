@@ -30,7 +30,7 @@ public class EntityEventHelper {
             this.g_entityPlayer = new G_EntityPlayer(entityPlayer);
 
             if (event instanceof FillBucketEvent){
-                
+
             }
         }
         else{

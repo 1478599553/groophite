@@ -10,6 +10,8 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.Logger;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
 import java.io.IOException;
 
 @Mod(
@@ -26,10 +28,12 @@ public class groophite
     @Mod.Instance
     public static groophite Instance;
 
+    public static Clipboard clipboard;
+
     public static Logger logger;
 
     public groophite(){
-
+        clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     }
 
     @EventHandler
