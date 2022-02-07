@@ -1,4 +1,4 @@
-package com.draming.groophite.api.proxier;
+package com.draming.groophite.api;
 
 import net.minecraft.entity.Entity;
 
@@ -7,5 +7,7 @@ public class G_Entity {
     public G_Entity(Entity entity){
         this.inner_entity = entity;
     }
-
+    public G_World getWorld(){
+        return new G_World(this.inner_entity.getEntityWorld());
+    }
 }

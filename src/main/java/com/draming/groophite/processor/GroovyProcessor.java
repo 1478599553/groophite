@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 
-import com.draming.groophite.api.events.playerEvent.Groophite_PlayerContainerEvent;
+
 import com.draming.groophite.groophite;
 import groovy.lang.Closure;
 
@@ -27,7 +27,7 @@ public class GroovyProcessor {
         );
 
     public static void cleanClosures(){
-        Groophite_PlayerContainerEvent.closures = new ArrayList<Closure>();
+        //Groophite_PlayerContainerEvent.closures = new ArrayList<Closure>();
         //TODO add more cleaning entries!
     }
 

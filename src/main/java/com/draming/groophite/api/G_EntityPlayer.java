@@ -1,8 +1,7 @@
-package com.draming.groophite.api.proxier;
+package com.draming.groophite.api;
 
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 
 public class G_EntityPlayer extends G_EntityLiving{
 

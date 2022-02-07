@@ -1,7 +1,7 @@
 package com.draming.groophite.api.events.playerEvent;
 
 
-import com.draming.groophite.api.events.EntityEventHelper;
+import com.draming.groophite.api.EntityEventHelper;
 import com.draming.groophite.groophite;
 import groovy.lang.Closure;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;

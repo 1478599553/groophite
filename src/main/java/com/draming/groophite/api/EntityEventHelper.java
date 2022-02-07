@@ -1,15 +1,13 @@
-package com.draming.groophite.api.events;
+package com.draming.groophite.api;
 
-import com.draming.groophite.api.proxier.G_EntityPlayer;
-import com.draming.groophite.api.proxier.G_World;
+import com.draming.groophite.api.G_EntityPlayer;
+import com.draming.groophite.api.G_ItemStack;
+import com.draming.groophite.api.G_World;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class EntityEventHelper {
     EntityPlayer entityPlayer;
@@ -18,6 +16,8 @@ public class EntityEventHelper {
     public boolean isCancelable;
     EntityEvent entityEvent;
     public G_World g_world;
+    public G_ItemStack g_emptyBucket;
+    public G_ItemStack g_filledBucket;
 
     public <T extends EntityEvent> EntityEventHelper(T event) {
         this.entity = event.getEntity();
@@ -25,16 +25,20 @@ public class EntityEventHelper {
         this.entityEvent = event;
         this.g_world = new G_World(event.getEntity().getEntityWorld());
 
+
         if (event instanceof PlayerEvent){
             this.entityPlayer = ((PlayerEvent) event).getEntityPlayer();
             this.g_entityPlayer = new G_EntityPlayer(entityPlayer);
 
             if (event instanceof FillBucketEvent){
+                g_emptyBucket =  new G_ItemStack(((FillBucketEvent) event).getEmptyBucket());
+                g_filledBucket = new G_ItemStack(((FillBucketEvent) event).getFilledBucket());
 
             }
         }
         else{
             this.entityPlayer = (EntityPlayer) this.entity;
+
         }
 
 

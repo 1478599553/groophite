@@ -1,4 +1,4 @@
-package com.draming.groophite.api.proxier;
+package com.draming.groophite.api;
 
 
 import net.minecraft.util.math.BlockPos;
