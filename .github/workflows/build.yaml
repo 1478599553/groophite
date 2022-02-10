@@ -13,8 +13,10 @@ jobs:
           cd ./groophite
           del gradle.properties
           ./gradlew.bat build
-
-
+          ./github-release.exe -u 1478599553 -r groophite -t "snapshot_auto_build" -f build/libs/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+'''
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: |
@@ -26,3 +28,4 @@ jobs:
           args: build/libs/*.jar application/octet-stream
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+'''
