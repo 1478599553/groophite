@@ -12,7 +12,7 @@ jobs:
       - run: ls
       - run: cd ./groophite
       - run: ls
-      - run: call "./gradlew build"
+      - run: call "./groophite/gradlew build"
 
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
