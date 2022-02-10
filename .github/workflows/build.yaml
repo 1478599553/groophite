@@ -7,10 +7,10 @@ jobs:
     steps:
 
       - run: mkdir buildMod
-      - run: cd buildMod
+      - run: cd ./buildMod
       - run: git clone https://github.com/1478599553/groophite.git
       - run: dir
-      - run: cd groophite
+      - run: cd ./groophite
       - run: dir
       - run: call "./gradlew build"
 
