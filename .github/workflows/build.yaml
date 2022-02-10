@@ -2,18 +2,16 @@ name: Build Mod
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    #runs-on: windows-2019
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
+    #runs-on: ubuntu-latest
     steps:
 
       - run: |
           mkdir ~/buildMod
           cd ~/buildMod
           git clone https://github.com/1478599553/groophite.git
-          ls
           cd ./groophite
-          ls
-          sudo cd ~/buildMod/groophite || ./gradlew build
+          ./gradlew.bat build
 
 
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
