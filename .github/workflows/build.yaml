@@ -11,7 +11,7 @@ jobs:
       - run: dir
       - run: cd groophite
       - run: dir
-      - run: call "./gradlew.bat build"
+      - run: call "./gradlew build"
 
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
