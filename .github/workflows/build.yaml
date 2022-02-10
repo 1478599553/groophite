@@ -11,6 +11,7 @@ jobs:
           cd ~/buildMod
           git clone https://github.com/1478599553/groophite.git
           cd ./groophite
+          del gradle.properties
           ./gradlew.bat build
 
 
