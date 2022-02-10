@@ -6,13 +6,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - run: mkdir ~/buildMod
-      - run: cd ~/buildMod
-      - run: git clone https://github.com/1478599553/groophite.git ./
-      - run: ls
-      - run: cd ./groophite
-      - run: ls
-      - run: ~/groophite/gradlew build
+      - run: |
+          mkdir ~/buildMod
+          cd ~/buildMod
+          git clone https://github.com/1478599553/groophite.git
+          ls
+          cd ./groophite
+          ls
+          ./gradlew build
+
 
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
