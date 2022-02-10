@@ -54,4 +54,8 @@ public class G_DamageSource {
         this.__innerDamageSource.setDamageIsAbsolute();
         return this;
     }
+    public G_DamageSource setDamageAllowedInCreativeMode(){
+        this.__innerDamageSource.setDamageAllowedInCreativeMode();
+        return this;
+    }
 }
