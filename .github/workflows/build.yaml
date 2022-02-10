@@ -10,7 +10,7 @@ jobs:
       - run: cd ~/buildMod
       - run: git clone https://github.com/1478599553/groophite.git
       - run: ls
-      - run: cd groophite
+      - run: cd ./groophite
       - run: ls
       - run: ~/groophite/gradlew build
 
