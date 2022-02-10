@@ -2,7 +2,8 @@ name: Build Mod
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    runs-on: windows-2019
+    #runs-on: windows-2019
+    runs-on: ubuntu-latest
     steps:
 
       - run: mkdir buildMod
