@@ -4,7 +4,7 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: windows-2019
     steps:
-      - run: D:
+
       - run: mkdir D:/a/buildMod
       - run: cd D:/a/buildMod
       - run: git clone https://github.com/1478599553/groophite.git
