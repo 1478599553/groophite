@@ -1,0 +1,22 @@
+name: Build Mod
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: mkdir ~/buildMod
+      - run: cd ~/buildMod
+      - run: git clone https://github.com/1478599553/groophite.git
+      - run: cd groophite
+      - run: gradlew build
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Upload to release
+                 uses: JasonEtco/upload-to-release@master
+                 with:
+                   args: build/libs/*.jar application/octet-stream
+                 env:
+                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

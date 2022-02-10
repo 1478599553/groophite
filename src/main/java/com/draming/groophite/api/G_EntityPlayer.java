@@ -2,6 +2,7 @@ package com.draming.groophite.api;
 
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
 
 public class G_EntityPlayer extends G_EntityLiving{
 
@@ -13,9 +14,11 @@ public class G_EntityPlayer extends G_EntityLiving{
     }
 
     public void setDead(){
-        this.player.setDead();
+        this.player.attackEntityFrom(DamageSource.ANVIL);
     }
-
+    public void setHealth(float health){
+        this.player.setHealth(health);
+    }
     public void setFire(int seconds){
         this.player.setFire(seconds);
     }

@@ -19,7 +19,9 @@ public class G_ItemStack {
     }
 
     G_ItemStack(ItemStack __ItemStack){
-        this.__innerItem = __ItemStack.getItem();
+        if (__ItemStack.getItem() != null) {
+            this.__innerItem = __ItemStack.getItem();
+        }
         this.__innerItemStack = __ItemStack;
     }
 

@@ -13,7 +13,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = groophite.MODID)
 public class Groophite_PlayerContainerEvent{
     public static List<Closure> closures = new ArrayList<Closure>();
-    public static PlayerContainerEvent event;
+
 
     public static void subscribeEvent(Closure closure){
         closures.add(closure);
