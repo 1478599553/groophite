@@ -2,7 +2,7 @@ name: Build Mod
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    runs-on: Windows
+    runs-on: windows-2019
     steps:
 
       - run: mkdir D:/a/buildMod
