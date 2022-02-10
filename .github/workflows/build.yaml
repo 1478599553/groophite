@@ -13,7 +13,7 @@ jobs:
           ls
           cd ./groophite
           ls
-          sudo ./gradlew build
+          sudo cd ~/buildMod/groophite || ./gradlew build
 
 
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
