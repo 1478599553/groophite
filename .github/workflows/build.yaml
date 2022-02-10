@@ -12,7 +12,8 @@ jobs:
           git clone https://github.com/1478599553/groophite.git
           cd ./groophite
           ./gradlew.bat build
-          ./github-release.exe upload -u 1478599553 -r groophite -t "snapshot_auto_build" -f build/libs/*.jar
+          makecab ./build/libs ./groophite_release.zip
+          ./github-release.exe upload -u 1478599553 -r groophite -t "snapshot_auto_build" -f groophite_release.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
