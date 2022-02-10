@@ -8,7 +8,9 @@ jobs:
       - run: cd ~/buildMod
       - run: git clone https://github.com/1478599553/groophite.git
       - run: cd groophite
+      - run: dir
       - run: gradlew.bat build
+
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: |
