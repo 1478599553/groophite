@@ -2,12 +2,13 @@ name: Build Mod
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    runs-on: windows-2019
+    runs-on: Windows
     steps:
 
       - run: mkdir D:/a/buildMod
       - run: cd D:/a/buildMod
       - run: git clone https://github.com/1478599553/groophite.git
+      - run: dir
       - run: cd D:/a/buildMod/groophite
       - run: dir
       - run: ./gradlew.bat build
