@@ -9,9 +9,9 @@ jobs:
       - run: mkdir buildMod
       - run: cd ./buildMod
       - run: git clone https://github.com/1478599553/groophite.git
-      - run: dir
+      - run: ls
       - run: cd ./groophite
-      - run: dir
+      - run: ls
       - run: call "./gradlew build"
 
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
