@@ -36,6 +36,6 @@ public class G_EntityPlayer extends G_EntityLiving{
         return this.player.getName();
     }
 
-
+    
 
 }
