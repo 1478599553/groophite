@@ -32,13 +32,13 @@ public class CommandRoot extends CommandBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-        switch (args[0]){
-            case "reload": {
+        if (args[0].equals("reload"))
+        {
                 com.draming.groophite.processor.Reloader.reloadScript();
                 sender.sendMessage(new TextComponentString(I18n.format("groophite.reloaded.text")));
             }
-            case "regName":
-                {
+        if (args[0].equals("regName"))
+        {
                 String regName = ((EntityPlayer)sender).getHeldItemMainhand().getItem().getRegistryName().toString();
                     sender.sendMessage(new TextComponentString(regName));
                 Transferable transferable = new StringSelection(regName);
@@ -51,7 +51,7 @@ public class CommandRoot extends CommandBase {
 
         //}
 
-    }
+
     @Override
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos)
     {
