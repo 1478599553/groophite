@@ -1,15 +1,9 @@
 package com.draming.groophite.api;
 
-import com.draming.groophite.api.G_EntityPlayer;
-import com.draming.groophite.api.G_ItemStack;
-import com.draming.groophite.api.G_World;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
+import net.minecraftforge.event.entity.player.*;
 
 import java.util.List;
 
@@ -24,16 +18,13 @@ public class EntityEventHelper {
     public G_ItemStack g_filledBucket;
     public G_Pos newSpawn;
     public List<String>[] containerOfTooltip;
-
+    public G_Entity attackTarget;
     public G_ItemStack itemStackToToolTip;
 
     public <T extends EntityEvent> EntityEventHelper(T event) {
         this.entity = event.getEntity();
         this.isCancelable = event.isCancelable();
         this.entityEvent = event;
-        this.g_world = new G_World(event.getEntity().getEntityWorld());
-
-
 
         if (event instanceof PlayerEvent){
             this.entityPlayer = ((PlayerEvent) event).getEntityPlayer();
@@ -52,14 +43,15 @@ public class EntityEventHelper {
             }
             if (event instanceof ItemTooltipEvent) {
                 this.containerOfTooltip = new List[]{((ItemTooltipEvent) event).getToolTip()};
+
                 if (((ItemTooltipEvent) event).getItemStack() != null) {
                     this.itemStackToToolTip = new G_ItemStack(((ItemTooltipEvent) event).getItemStack());
                 }
             }
+            if (event instanceof AttackEntityEvent){
+                this.attackTarget = new G_Entity(((AttackEntityEvent) event).getTarget());
+            }
         }
-
-
-
     }
 
     public boolean cancel_event(){
@@ -75,6 +67,10 @@ public class EntityEventHelper {
 
     public List<String> getToolTip(){
         return this.containerOfTooltip[0];
+    }
+
+    public G_World getG_world(){
+        return this.g_world = new G_World(this.entityEvent.getEntity().getEntityWorld());
     }
 
 }

@@ -27,20 +27,24 @@ public class CommandRoot extends CommandBase {
         return "coming soon";
     }
 
+    public final static int code_of_reload = "reload".hashCode();
+    public final static int code_of_regName = "regName".hashCode();
+
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         switch (args[0]){
-            case "reload":
+            case "reload": {
                 com.draming.groophite.processor.Reloader.reloadScript();
                 sender.sendMessage(new TextComponentString(I18n.format("groophite.reloaded.text")));
+            }
             case "regName":
-
+                {
                 String regName = ((EntityPlayer)sender).getHeldItemMainhand().getItem().getRegistryName().toString();
                     sender.sendMessage(new TextComponentString(regName));
                 Transferable transferable = new StringSelection(regName);
                 groophite.clipboard.setContents(transferable,null);
                 sender.sendMessage(new TextComponentString(I18n.format("groophite.copied.text")));
-                
+                }
         }
 
         //if (args[0].equals("reload")) {

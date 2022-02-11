@@ -12,9 +12,12 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = groophite.MODID)
 public class Groophite_ItemTooltipEvent {
-
+    public List<String> tooltip;
     public static List<Closure> closures = new ArrayList<Closure>();
 
+    Groophite_ItemTooltipEvent (ItemTooltipEvent event){
+        this.tooltip = event.getToolTip();
+    }
 
     public static void subscribeEvent(Closure closure){
         closures.add(closure);
@@ -24,9 +27,8 @@ public class Groophite_ItemTooltipEvent {
     public static void callEvent(ItemTooltipEvent event){
 
         for (Closure closure : closures){
-            EntityEventHelper entityEventHelper = new EntityEventHelper(event);
-            closure.call(entityEventHelper);
+            Groophite_ItemTooltipEvent event_to_give = new Groophite_ItemTooltipEvent(event);
+            closure.call(event_to_give);
         }
-
     }
 }

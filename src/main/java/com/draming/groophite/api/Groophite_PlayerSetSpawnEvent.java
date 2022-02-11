@@ -13,6 +13,12 @@ import java.util.List;
 public class Groophite_PlayerSetSpawnEvent {
     public static List<Closure> closures = new ArrayList<Closure>();
 
+    public G_Pos newSpawn;
+    public G_EntityPlayer player;
+    Groophite_PlayerSetSpawnEvent(PlayerSetSpawnEvent event){
+        this.newSpawn = new G_Pos(event.getNewSpawn());
+        this.player = new G_EntityPlayer(event.getEntityPlayer());
+    }
 
     public static void subscribeEvent(Closure closure){
         closures.add(closure);
@@ -22,8 +28,8 @@ public class Groophite_PlayerSetSpawnEvent {
     public static void callEvent(PlayerSetSpawnEvent event){
 
         for (Closure closure : closures){
-            EntityEventHelper entityEventHelper = new EntityEventHelper(event);
-            closure.call(entityEventHelper);
+            Groophite_PlayerSetSpawnEvent event_to_give = new Groophite_PlayerSetSpawnEvent(event);
+            closure.call(event_to_give);
         }
 
     }

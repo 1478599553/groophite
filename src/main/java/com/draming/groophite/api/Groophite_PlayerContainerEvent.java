@@ -14,6 +14,10 @@ import java.util.List;
 public class Groophite_PlayerContainerEvent{
     public static List<Closure> closures = new ArrayList<Closure>();
 
+    public G_EntityPlayer player;
+    Groophite_PlayerContainerEvent (PlayerContainerEvent event){
+        this.player = new G_EntityPlayer(event.getEntityPlayer());
+    }
 
     public static void subscribeEvent(Closure closure){
         closures.add(closure);
@@ -23,8 +27,8 @@ public class Groophite_PlayerContainerEvent{
     public static void callEvent(PlayerContainerEvent event){
 
         for (Closure closure : closures){
-            EntityEventHelper entityEventHelper = new EntityEventHelper(event);
-            closure.call(entityEventHelper);
+            Groophite_PlayerContainerEvent event_to_give = new Groophite_PlayerContainerEvent(event);
+            closure.call(event_to_give);
         }
 
     }
