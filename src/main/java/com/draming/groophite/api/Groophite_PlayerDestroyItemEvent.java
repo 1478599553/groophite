@@ -1,6 +1,7 @@
 package com.draming.groophite.api;
 
 import groovy.lang.Closure;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -13,12 +14,19 @@ public class Groophite_PlayerDestroyItemEvent {
 
     public G_World world;
     public G_EntityPlayer player;
+    EnumHand __innerHand;
     EntityEventHelper __innerEvent;
 
     Groophite_PlayerDestroyItemEvent(PlayerDestroyItemEvent event){
         this.player = new G_EntityPlayer(event.getEntityPlayer());
+    }
 
-
+    public G_EnumHand getHand(){
+        if (this.__innerHand == EnumHand.MAIN_HAND){
+            return G_EnumHand.MAIN_HAND;
+        }
+        else
+            return G_EnumHand.OFF_HAND;
     }
 
     public static void subscribeEvent(Closure closure){
