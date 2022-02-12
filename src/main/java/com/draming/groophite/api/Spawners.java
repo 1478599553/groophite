@@ -1,6 +1,6 @@
 package com.draming.groophite.api;
 
-public class spawners {
+public class Spawners {
     public void spawnEntity(){
 
     }

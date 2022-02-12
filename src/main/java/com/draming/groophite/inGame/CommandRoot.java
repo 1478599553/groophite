@@ -34,8 +34,14 @@ public class CommandRoot extends CommandBase {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         if (args[0].equals("reload"))
         {
+            try {
                 com.draming.groophite.processor.Reloader.reloadScript();
-                sender.sendMessage(new TextComponentString(I18n.format("groophite.reloaded.text")));
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            sender.sendMessage(new TextComponentString(I18n.format("groophite.reloaded.text")));
             }
         if (args[0].equals("regName"))
         {

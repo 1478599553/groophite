@@ -37,7 +37,7 @@ public class groophite
     }
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event) throws IOException {
+    public void preInit(FMLPreInitializationEvent event) throws IOException, NoSuchFieldException, IllegalAccessException {
 
 
         logger = event.getModLog();

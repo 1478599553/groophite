@@ -3,8 +3,10 @@ package com.draming.groophite.processor;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.List;
 
 
+import com.draming.groophite.api.*;
 import com.draming.groophite.groophite;
 import groovy.lang.Closure;
 
@@ -26,12 +28,25 @@ public class GroovyProcessor {
             }
         );
 
-    public static void cleanClosures(){
-        //Groophite_PlayerContainerEvent.closures = new ArrayList<Closure>();
+    public static void cleanClosures() throws NoSuchFieldException, IllegalAccessException {
+        List<Class> event_clazz = new ArrayList<Class>();
+
+        event_clazz.add(Groophite_PlayerDestroyItemEvent.class);
+        event_clazz.add(Groophite_EntityJoinWorldEvent.class);
+        event_clazz.add(Groophite_PlayerSetSpawnEvent.class);
+        event_clazz.add(Groophite_PlayerContainerEvent.class);
+        event_clazz.add(Groophite_FillBucketEvent.class);
+        event_clazz.add(Groophite_ItemTooltipEvent.class);
+        event_clazz.add(Groophite_AttackEntityEvent.class);
+
+
+        for (Class clazz : event_clazz){
+            clazz.getField("closures").set(clazz,new ArrayList<Closure>());;
+        }
         //TODO add more cleaning entries!
     }
 
-    public GroovyProcessor(){
+    public GroovyProcessor() throws NoSuchFieldException, IllegalAccessException {
         cleanClosures();
         if (script_files  != null)
         {
