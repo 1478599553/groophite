@@ -10,12 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = groophite.MODID)
-public class Groophite_PlayerSetSpawnEvent {
+public class Groophite_PlayerSetSpawnEvent extends G_PlayerEvent{
     public static List<Closure> closures = new ArrayList<Closure>();
 
     public G_Pos newSpawn;
     public G_EntityPlayer player;
     Groophite_PlayerSetSpawnEvent(PlayerSetSpawnEvent event){
+        super(event);
         this.newSpawn = new G_Pos(event.getNewSpawn());
         this.player = new G_EntityPlayer(event.getEntityPlayer());
     }

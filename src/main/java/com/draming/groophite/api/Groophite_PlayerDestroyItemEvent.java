@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Groophite_PlayerDestroyItemEvent {
+public class Groophite_PlayerDestroyItemEvent extends G_PlayerEvent{
     public static List<Closure> closures = new ArrayList<Closure>();
 
     public G_World world;
@@ -18,6 +18,7 @@ public class Groophite_PlayerDestroyItemEvent {
     EntityEventHelper __innerEvent;
 
     Groophite_PlayerDestroyItemEvent(PlayerDestroyItemEvent event){
+        super(event);
         this.player = new G_EntityPlayer(event.getEntityPlayer());
     }
 

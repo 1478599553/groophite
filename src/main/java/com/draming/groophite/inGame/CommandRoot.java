@@ -19,7 +19,7 @@ import com.draming.groophite.groophite;
 public class CommandRoot extends CommandBase {
     @Override
     public String getName() {
-        return "gt";
+        return "grt";
     }
 
     @Override
