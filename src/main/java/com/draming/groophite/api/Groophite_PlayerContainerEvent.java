@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Mod.EventBusSubscriber(modid = groophite.MODID)
 public class Groophite_PlayerContainerEvent extends G_PlayerEvent{
     public static List<Closure> closures = new ArrayList<Closure>();

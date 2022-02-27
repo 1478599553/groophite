@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class G_PlayerEvent extends G_Event {
 
-    private G_EntityPlayer player;
+    public G_EntityPlayer player;
 
     public G_EntityPlayer getPlayer(){
         return this.player;
