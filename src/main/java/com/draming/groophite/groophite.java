@@ -42,7 +42,7 @@ public class groophite
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) throws Exception {
 
-        com.draming.groophite.modsCompat.ModCompatUtils.expose(testEvent.class);
+        com.draming.groophite.modsCompat.ModCompatUtils.expose(testEnum.class);
 
         logger = event.getModLog();
 
