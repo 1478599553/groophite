@@ -24,22 +24,6 @@ public abstract class testEvent {
     }
     @SubscribeEvent
     public static void test2 (WorldEvent.CreateSpawnPosition event){
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        System.out.println("OK!!!!!!!!!!!!!!!Spawning!!!!");
-        event.getWorld().setWorldTime(13000);
     }
 }
 
