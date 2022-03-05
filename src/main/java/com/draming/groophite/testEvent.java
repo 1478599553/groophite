@@ -1,5 +1,6 @@
 package com.draming.groophite;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
