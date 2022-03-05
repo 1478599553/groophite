@@ -1,4 +1,4 @@
-#Groophite
+# Groophite
 
 ## Why 
 #### Groophite is a mod which is powerful to tweak minecraft with Groovy scripts (Still WIP). It provides more powerful features :
