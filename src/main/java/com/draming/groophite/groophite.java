@@ -5,6 +5,7 @@ import com.draming.groophite.inGame.CommandRoot;
 /*
 import jd.core.Decompiler;
  */
+import com.draming.groophite.modsCompat.ModCompatUtils;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
@@ -41,8 +42,11 @@ public class groophite
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) throws Exception {
-
-        com.draming.groophite.modsCompat.ModCompatUtils.expose(testEnum.class);
+        String groophitePackName = this.getClass().getPackage().getName().replace("groophite","groophite.api");
+        Class[] classes = ModCompatUtils.getClasssFromPackage(groophitePackName).toArray(new Class[0]);
+        for (Class clz : classes){
+            ModCompatUtils.expose(clz);
+        }
 
         logger = event.getModLog();
 
