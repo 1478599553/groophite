@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.draming.groophite.groophite;
+import org.codehaus.groovy.control.MultipleCompilationErrorsException;
 import org.codehaus.groovy.runtime.InvokerHelper;
 
 import groovy.lang.GroovyClassLoader;
@@ -23,7 +25,7 @@ public class GroovyScriptFactory {
         return factory;
     }
 
-    private Class getScript(File file) {
+    private Class getScript(File file) throws MultipleCompilationErrorsException {
         String key;
         key = ReadFileContent.readFileContent(file);
 
@@ -33,9 +35,18 @@ public class GroovyScriptFactory {
             return scriptCache.get(encodeStr);
         }else{
             // 脚本不存在则创建新的脚本
-            Class<Script> scriptClass = classLoader.parseClass(key);
-            scriptCache.put(encodeStr, scriptClass);
-            return scriptClass;
+            try {
+                Class<Script> scriptClass = classLoader.parseClass(key);
+                scriptCache.put(encodeStr, scriptClass);
+                return scriptClass;
+            }catch (MultipleCompilationErrorsException e){
+                e.printStackTrace();
+                groophite.logger.fatal("Unable to load script"+ file.getName());
+
+                return classLoader.parseClass("");
+
+            }
+
         }
     }
 

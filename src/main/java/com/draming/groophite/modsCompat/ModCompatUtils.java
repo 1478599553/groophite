@@ -24,7 +24,11 @@ public class ModCompatUtils {
     public static void calcExpose() throws IOException {
 
         for (Class classToExpose : clazzesToExpose) {
+            System.out.println("Exposing: "+classToExpose.getName());
+
             String packageName = classToExpose.getPackage().getName();
+
+
 
             StringBuilder sourceCodeBuilder = new StringBuilder();
             StringBuilder fieldNameBuilder = new StringBuilder();
@@ -32,13 +36,13 @@ public class ModCompatUtils {
             Method[] methods = classToExpose.getDeclaredMethods();
 
             sourceCodeBuilder
-                    .append(classToExpose.getPackage())
+                    .append(classToExpose.getPackage()+";")
                     .append(lineSeparator);
 
             if (classToExpose.isEnum()) {
                 sourceCodeBuilder
-                        .append("public enum " + classToExpose.getName() + "{" + lineSeparator);
-                Iterator<Field> iterator = Arrays.stream(fields).iterator();
+                        .append("public enum " + classToExpose.getName().replace(packageName+".","") + "{" + lineSeparator);
+
                 int count = 0;
                 StringBuilder enumBuilder = new StringBuilder();
                 System.out.println(fields.length);
@@ -57,10 +61,20 @@ public class ModCompatUtils {
                 sourceCodeBuilder.append(enumBuilder.toString());
                 sourceCodeBuilder.append("}");
                 stubSources.add(sourceCodeBuilder.toString());
-            } else {
-                sourceCodeBuilder
-                        .append("public class " + classToExpose.getName() + "{" + lineSeparator);
+            }
+            else
+            {
 
+                if (classToExpose.getSuperclass().equals(Object.class)){
+                    sourceCodeBuilder
+                            .append("public class " + classToExpose.getName()
+                                    .replace(packageName+".","") + "{" + lineSeparator);
+                }else {
+                    sourceCodeBuilder
+                            .append("public class " + classToExpose.getName()
+                                    .replace(packageName+".","")
+                                        +" extends "+ classToExpose.getSuperclass().getName() + "{" + lineSeparator);
+                }
                 //Generate methods
                 for (Method method : methods) {
                     method.setAccessible(true);
@@ -89,15 +103,18 @@ public class ModCompatUtils {
                             break;
                         }
                     }
-                    fieldNameBuilder.append(lineSeparator);
+
+                    fieldNameBuilder.append(";").append(lineSeparator);
                 }
                 sourceCodeBuilder.append(fieldNameBuilder.toString());
 
                 //the end
                 sourceCodeBuilder.append(lineSeparator + "}");
                 stubSources.add(sourceCodeBuilder.toString());
+                /*
             }
-
+*/
+        }
             FileUtils.writeStringToFile(
                     new File("./scripts/groophite/"
                             + classToExpose.getPackage().getName()
@@ -105,8 +122,12 @@ public class ModCompatUtils {
                             + "/"
                             + classToExpose.getName().replace(classToExpose.getPackage().getName()+".","")
                             + ".java"),
-                    stubSources.toString(), "UTF-8");
-        }
+                    stubSources.toString()
+                            .replace("[","")
+                            .replace("]",""),
+                    "UTF-8");
+            stubSources.clear();
+    }
     }
 
 
@@ -129,11 +150,11 @@ public class ModCompatUtils {
                 String protocol = url.getProtocol();
 
                 if ("file".equals(protocol)) {
-                    System.out.println("file类型的扫描");
+
                     String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
                     findClassInPackageByFile(packageName, filePath, recursive, clazzs);
                 } else if ("jar".equals(protocol)) {
-                    System.out.println("jar类型的扫描");
+
                 }
             }
 
@@ -144,30 +165,19 @@ public class ModCompatUtils {
         return clazzs;
     }
 
-    /**
-     * 在package对应的路径下找到所有的class
-     *
-     * @param packageName
-     *            package名称
-     * @param filePath
-     *            package对应的路径
-     * @param recursive
-     *            是否查找子package
-     * @param clazzs
-     *            找到class以后存放的集合
-     */
+
     public static void findClassInPackageByFile(String packageName, String filePath, final boolean recursive, List<Class> clazzs) {
         File dir = new File(filePath);
         if (!dir.exists() || !dir.isDirectory()) {
             return;
         }
-        // 在给定的目录下找到所有的文件，并且进行条件过滤
+
         File[] dirFiles = dir.listFiles(new FileFilter() {
 
             @Override
             public boolean accept(File file) {
-                boolean acceptDir = recursive && file.isDirectory();// 接受dir目录
-                boolean acceptClass = file.getName().endsWith("class");// 接受class文件
+                boolean acceptDir = recursive && file.isDirectory();
+                boolean acceptClass = file.getName().endsWith("class");
                 return acceptDir || acceptClass;
             }
         });
