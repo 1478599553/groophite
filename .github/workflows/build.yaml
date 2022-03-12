@@ -17,7 +17,8 @@ jobs:
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/download-artifact@v2
+      - name: artifact
+        uses: actions/download-artifact@v2
         with:
           name: Groophite
           path: ~/buildMod/groophite/CIUtils/build

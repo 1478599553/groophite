@@ -67,7 +67,7 @@ repositories {
     maven { url = 'https://maven.minecraftforge.net/' }
     mavenCentral()
     flatDir {
-        dir 'libKnoothing'
+        dir 'libs'
     }
 }
 dependencies {
@@ -90,7 +90,8 @@ dependencies {
     //provided
     // These dependencies get remapped to your current MCP mappings
     deobf 'com.draming.knoothing:Knoothing:1.0'
-
+    deobf 'com.codetaylor.mc.pyrotech:pyrotech'
+    deobf 'crafttweaker.mc1120:crafttweaker'
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
