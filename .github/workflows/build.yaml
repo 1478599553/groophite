@@ -13,7 +13,7 @@ jobs:
           cd ./groophite
           ./gradlew.bat build
 
-          ./CIUtils/7z a ./build/groophite-release.zip ./build/libs/
+          ./CIUtils/7z  ./build/groophite-release.zip ./build/libs/
           Copy ./CIUtils/build/groophite-release.zip ~/groophite.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
