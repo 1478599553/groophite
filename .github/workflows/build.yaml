@@ -14,14 +14,14 @@ jobs:
           ./gradlew.bat build
 
           ./CIUtils/7z a ./build/groophite-release.zip ./build/libs/
-
+          Copy ./CIUtils/build/groophite-release.zip ~/groophite.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v1
         with:
           name: Groophite
-          path: ~/buildMod/groophite/CIUtils/build
+          path: ~/groophite
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: |
