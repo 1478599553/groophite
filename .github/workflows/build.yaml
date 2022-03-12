@@ -12,13 +12,13 @@ jobs:
           git clone https://github.com/1478599553/groophite.git
           cd ./groophite
           ./gradlew.bat build
-          ./CIUtils/7z a ./groophite-release.zip ./build/libs/
-          ./CIUtils/github-release.exe delete --user 1478599553 --repo groophite --tag "snapshot_auto_build"
-          ./CIUtils/github-release.exe release --user 1478599553 --repo groophite --tag "snapshot_auto_build" --name "Snapshot autobuild" --description "Auto built by Github Actions." --pre-release
-          ./CIUtils/github-release.exe upload -u 1478599553 -r groophite -t "snapshot_auto_build" -f groophite-release.zip --name groophite.zip
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+      - uses: actions/download-artifact@v2
+        with:
+          name: Groophite
+          path: C:/Users/runneradmin/buildMod/groophite/build/libs
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: |

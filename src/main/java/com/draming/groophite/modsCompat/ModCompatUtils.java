@@ -1,8 +1,11 @@
 package com.draming.groophite.modsCompat;
 
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -11,49 +14,56 @@ import java.util.*;
 
 public class ModCompatUtils {
     public static final String lineSeparator = System.lineSeparator();
-    public static List<String> stubSources;
+    public static List<String> stubSources = new ArrayList<String>();
+    private static List<Class> clazzesToExpose = new ArrayList<Class>();
 
-    public static void expose(Class classToExpose){
-        String packageName = classToExpose.getPackage().getName();
+    public static void expose(Class clazzToExpose){
+        clazzesToExpose.add(clazzToExpose);
+    }
 
-        StringBuilder sourceCodeBuilder = new StringBuilder();
-        StringBuilder fieldNameBuilder = new StringBuilder();
-        Field[] fields = classToExpose.getFields();
-        Method[] methods = classToExpose.getDeclaredMethods();
+    public static void calcExpose() throws IOException {
 
-        sourceCodeBuilder
-                .append(classToExpose.getPackage())
-                .append(lineSeparator);
+        for (Class classToExpose : clazzesToExpose) {
+            String packageName = classToExpose.getPackage().getName();
 
-        if (classToExpose.isEnum())
-        {
+            StringBuilder sourceCodeBuilder = new StringBuilder();
+            StringBuilder fieldNameBuilder = new StringBuilder();
+            Field[] fields = classToExpose.getFields();
+            Method[] methods = classToExpose.getDeclaredMethods();
+
             sourceCodeBuilder
-                    .append("public enum "+classToExpose.getName() + "{" + lineSeparator);
-            Iterator<Field> iterator = Arrays.stream(fields).iterator();
-            int count = 0;
-            StringBuilder enumBuilder = new StringBuilder();
-            System.out.println(fields.length);
-            for (Field field : fields){
-                if (count < (fields.length-1) ) {
-                    enumBuilder.append(fields[count].getName()+",");
-                    count = count + 1;
-                }
-                if (count == (fields.length-1)){
-                    enumBuilder.append(fields[count].getName()+";");
-                    break;
-                }
+                    .append(classToExpose.getPackage())
+                    .append(lineSeparator);
 
-            }
-            sourceCodeBuilder.append(enumBuilder.toString());
-            sourceCodeBuilder.append("}");
-        }
-        else
-        {
-            sourceCodeBuilder
-                    .append("public class " + classToExpose.getName() + "{" + lineSeparator);
+            if (classToExpose.isEnum()) {
+                sourceCodeBuilder
+                        .append("public enum " + classToExpose.getName() + "{" + lineSeparator);
+                Iterator<Field> iterator = Arrays.stream(fields).iterator();
+                int count = 0;
+                StringBuilder enumBuilder = new StringBuilder();
+                System.out.println(fields.length);
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    if (count < (fields.length - 1)) {
+                        enumBuilder.append(fields[count].getName() + ",");
+                        count = count + 1;
+                    }
+                    if (count == (fields.length - 1)) {
+                        enumBuilder.append(fields[count].getName() + ";");
+                        break;
+                    }
 
-            //Generate methods
-            for (Method method : methods) {
+                }
+                sourceCodeBuilder.append(enumBuilder.toString());
+                sourceCodeBuilder.append("}");
+                stubSources.add(sourceCodeBuilder.toString());
+            } else {
+                sourceCodeBuilder
+                        .append("public class " + classToExpose.getName() + "{" + lineSeparator);
+
+                //Generate methods
+                for (Method method : methods) {
+                    method.setAccessible(true);
                     sourceCodeBuilder
                             .append(lineSeparator)
                             .append(method.toString().replace(classToExpose.getName() + ".", ""))
@@ -61,10 +71,11 @@ public class ModCompatUtils {
                             .append(lineSeparator)
                             .append("}")
                             .append(lineSeparator);
-            }
+                }
 
-            //Generate fields
-            for (Field field : fields) {
+                //Generate fields
+                for (Field field : fields) {
+                    field.setAccessible(true);
                     String[] statementStringArray = field.toString().split(" ");
                     String[] fieldNameArray = statementStringArray[statementStringArray.length - 1]
                             .split("\\.");
@@ -79,15 +90,24 @@ public class ModCompatUtils {
                         }
                     }
                     fieldNameBuilder.append(lineSeparator);
+                }
+                sourceCodeBuilder.append(fieldNameBuilder.toString());
+
+                //the end
+                sourceCodeBuilder.append(lineSeparator + "}");
+                stubSources.add(sourceCodeBuilder.toString());
             }
-            sourceCodeBuilder.append(fieldNameBuilder.toString());
 
-            //the end
-            sourceCodeBuilder.append(lineSeparator + "}");
-
+            FileUtils.writeStringToFile(
+                    new File("./scripts/groophite/"
+                            + classToExpose.getPackage().getName()
+                            .replace(".", "/")
+                            + "/"
+                            + classToExpose.getName().replace(classToExpose.getPackage().getName()+".","")
+                            + ".java"),
+                    stubSources.toString(), "UTF-8");
         }
-            stubSources.add(sourceCodeBuilder.toString());
-        }
+    }
 
 
     public static List<Class> getClasssFromPackage(String pack) {

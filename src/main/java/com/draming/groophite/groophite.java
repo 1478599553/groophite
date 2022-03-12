@@ -42,12 +42,17 @@ public class groophite
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) throws Exception {
+
         String groophitePackName = this.getClass().getPackage().getName().replace("groophite","groophite.api");
         Class[] classes = ModCompatUtils.getClasssFromPackage(groophitePackName).toArray(new Class[0]);
         for (Class clz : classes){
+            System.out.println(clz.getName());
+            System.out.println("OK!!!!!!!!!!EXPOSING");
             ModCompatUtils.expose(clz);
+
         }
 
+        ModCompatUtils.calcExpose();
         logger = event.getModLog();
 
 

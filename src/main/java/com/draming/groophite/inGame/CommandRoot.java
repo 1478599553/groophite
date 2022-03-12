@@ -32,27 +32,26 @@ public class CommandRoot extends CommandBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-        if (args[0].equals("reload"))
-        {
-            try {
-                com.draming.groophite.processor.Reloader.reloadScript();
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            sender.sendMessage(new TextComponentString(I18n.format("groophite.reloaded.text")));
-            }
-        if (args[0].equals("regName"))
-        {
-                String regName = ((EntityPlayer)sender).getHeldItemMainhand().getItem().getRegistryName().toString();
-                    sender.sendMessage(new TextComponentString(regName));
-                Transferable transferable = new StringSelection(regName);
-                groophite.clipboard.setContents(transferable,null);
-                sender.sendMessage(new TextComponentString(I18n.format("groophite.copied.text")));
+        switch (args[0]) {
+            case ("reload"):
+                try {
+                    com.draming.groophite.processor.Reloader.reloadScript();
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
                 }
+                sender.sendMessage(new TextComponentString(I18n.format("groophite.reloaded.text")));
+                break;
+            case ("regName"):
+                String regName = ((EntityPlayer) sender).getHeldItemMainhand().getItem().getRegistryName().toString();
+                sender.sendMessage(new TextComponentString(regName));
+                Transferable transferable = new StringSelection(regName);
+                groophite.clipboard.setContents(transferable, null);
+                sender.sendMessage(new TextComponentString(I18n.format("groophite.copied.text")));
+                break;
         }
-
+    }
         //if (args[0].equals("reload")) {
 
         //}
