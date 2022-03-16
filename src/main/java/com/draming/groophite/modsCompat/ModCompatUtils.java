@@ -1,16 +1,23 @@
 package com.draming.groophite.modsCompat;
 
 
+
 import org.apache.commons.io.FileUtils;
+
+
+import org.objectweb.asm.*;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.*;
+
 
 public class ModCompatUtils {
     public static final String lineSeparator = System.lineSeparator();
@@ -36,7 +43,7 @@ public class ModCompatUtils {
             Method[] methods = classToExpose.getDeclaredMethods();
 
             sourceCodeBuilder
-                    .append(classToExpose.getPackage()+";")
+                    .append("package "+packageName+";")
                     .append(lineSeparator);
 
             if (classToExpose.isEnum()) {
@@ -45,7 +52,7 @@ public class ModCompatUtils {
 
                 int count = 0;
                 StringBuilder enumBuilder = new StringBuilder();
-                System.out.println(fields.length);
+
                 for (Field field : fields) {
                     field.setAccessible(true);
                     if (count < (fields.length - 1)) {
@@ -75,16 +82,84 @@ public class ModCompatUtils {
                                     .replace(packageName+".","")
                                         +" extends "+ classToExpose.getSuperclass().getName() + "{" + lineSeparator);
                 }
+
+                List<String> paraTypes = new ArrayList<>();
+
                 //Generate methods
                 for (Method method : methods) {
                     method.setAccessible(true);
-                    sourceCodeBuilder
-                            .append(lineSeparator)
-                            .append(method.toString().replace(classToExpose.getName() + ".", ""))
-                            .append("{")
-                            .append(lineSeparator)
-                            .append("}")
-                            .append(lineSeparator);
+
+                    if (method.getParameters().length != 0) {
+                        String rawBracketContent = method.toString()
+                                .split("\\(")[1]
+                                .split("\\)")[0]
+                                .replace(classToExpose.getName() + ".", "");
+
+                        String theWholeBracketContent = method.toString().split("\\(")[1];
+                        //.replace("\\)","")
+
+                        //Todo test print
+                        System.out.println("rawBracketContent is " + rawBracketContent);
+
+                        boolean isSinglePara = !rawBracketContent.contains(",");
+                        if (isSinglePara) {
+                            paraTypes.add(rawBracketContent);
+                        } else {
+                            for (String para : rawBracketContent.split(",")) {
+                                paraTypes.add(para);
+                            }
+                        }
+                        String[] paraNames = getMethodParamNames(method);
+                        StringBuilder completeBracketContentBuilder = new StringBuilder();
+
+                        int index = 0;
+                        if (isSinglePara) {
+                            completeBracketContentBuilder.append(paraTypes.get(index) + " " + paraNames[index]);
+                        } else {
+                            for (String paraType : paraTypes) {
+                                //not the last one
+                                if (index != (paraNames.length - 1)) {
+                                    completeBracketContentBuilder.append(
+                                            paraType + " " + paraNames[index] + ","
+                                    );
+                                    index = index + 1;
+                                }
+                                //the last one
+                                else {
+                                    completeBracketContentBuilder.append(
+                                            paraType + " " + paraNames[index]
+                                    );
+                                }
+                            }
+                        }
+                        completeBracketContentBuilder.append(" )");
+                        sourceCodeBuilder
+                                .append(lineSeparator)
+                                //.append(method.toString().replace(classToExpose.getName() + ".", ""))
+                                .append(method.toString()
+                                        .replace(classToExpose.getName() + ".", "")
+                                        .replace(theWholeBracketContent, completeBracketContentBuilder))
+
+                                .append("{")
+                                .append(lineSeparator)
+                                .append("}")
+                                .append(lineSeparator);
+
+                        //Todo test print
+                        System.out.println("Source is " + sourceCodeBuilder);
+                    }
+                    else{
+                        sourceCodeBuilder
+                                .append(lineSeparator)
+                                //.append(method.toString().replace(classToExpose.getName() + ".", ""))
+                                .append(method.toString()
+                                        .replace(classToExpose.getName() + ".", ""))
+                                .append("{")
+                                .append(lineSeparator)
+                                .append("}")
+                                .append(lineSeparator);
+                    }
+                    paraTypes.clear();
                 }
 
                 //Generate fields
@@ -195,5 +270,68 @@ public class ModCompatUtils {
             }
         }
     }
+
+
+
+    private static boolean sameType(Type[] types, Class<?>[] clazzes) {
+        // 个数不同
+        if (types.length != clazzes.length) {
+            return false;
+        }
+
+        for (int i = 0; i < types.length; i++) {
+            if (!Type.getType(clazzes[i]).equals(types[i])) {
+                return false;
+            }
+        }
+        return true;
     }
+
+
+    public static String[] getMethodParamNames(final Method m) {
+        final String[] paramNames = new String[m.getParameterTypes().length];
+        final String n = m.getDeclaringClass().getName();
+        ClassReader cr = null;
+        try {
+            cr = new ClassReader(n);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        cr.accept(new ClassVisitor(Opcodes.ASM4) {
+            @Override
+            public MethodVisitor visitMethod(final int access,
+                                             final String name, final String desc,
+                                             final String signature, final String[] exceptions) {
+                final Type[] args = Type.getArgumentTypes(desc);
+
+                if (!name.equals(m.getName())
+                        || !sameType(args, m.getParameterTypes())) {
+                    return super.visitMethod(access, name, desc, signature,
+                            exceptions);
+                }
+                MethodVisitor v = super.visitMethod(access, name, desc,
+                        signature, exceptions);
+                return new MethodVisitor(Opcodes.ASM4, v) {
+                    @Override
+                    public void visitLocalVariable(String name, String desc,
+                                                   String signature, Label start, Label end, int index) {
+                        int i = index - 1;
+
+                        if (Modifier.isStatic(m.getModifiers())) {
+                            i = index;
+                        }
+                        if (i >= 0 && i < paramNames.length) {
+                            paramNames[i] = name;
+                        }
+                        super.visitLocalVariable(name, desc, signature, start,
+                                end, index);
+                    }
+
+                };
+            }
+        }, 0);
+        return paramNames;
+    }
+
+}
 

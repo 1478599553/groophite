@@ -80,7 +80,7 @@ dependencies {
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
-
+    provided "com.jetbrains.decompiler:fernflower"
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
@@ -89,9 +89,25 @@ dependencies {
     //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
     //provided
     // These dependencies get remapped to your current MCP mappings
+
+
+
     deobf 'com.draming.knoothing:Knoothing:1.0'
-    //deobf 'com.codetaylor.mc.pyrotech:pyrotech'
-    //deobf 'crafttweaker.mc1120:crafttweaker'
+    deobf 'crafttweaker.mc1120:crafttweaker2'
+    deobf 'com.youknowwho:athenaeum'
+    deobf 'com.youknowwho:dropt'
+    deobf 'com.codetaylor.mc.pyrotech:pyrotech'
+    /*
+
+    //deobf 'com.youknowwho:jei'
+
+
+    */
+
+    //deobf 'crafttweaker.mc1120:crtsources'
+    //deobf 'crafttweaker.mc1120:crtapi'
+
+    //annotationProcessor 'crafttweaker.mc1120:crafttweaker'
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
@@ -103,9 +119,9 @@ jar {
     //from configurations.provided.files.collect { zipTree(it) }
     manifest {
         attributes([
-            "Specification-Title": "tooltipinjector",
+            "Specification-Title": "",
             "Specification-Vendor": "",
-            "Specification-Version": "1", // We are version 1 of ourselves
+            "Specification-Version": "", // We are version 1 of ourselves
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"",

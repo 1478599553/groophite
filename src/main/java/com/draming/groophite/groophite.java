@@ -1,30 +1,44 @@
 package com.draming.groophite;
 
 
-import com.draming.groophite.api.G_Entity;
+
 import com.draming.groophite.api.G_EntityPlayer;
 import com.draming.groophite.inGame.CommandRoot;
-/*
-import jd.core.Decompiler;
- */
 import com.draming.groophite.modsCompat.ModCompatUtils;
+/*
+//import com.codetaylor.mc.pyrotech.modules.tech.basic.plugin.crafttweaker.ZenSoakingPot;
+//import com.codetaylor.mc.pyrotech.modules.tech.refractory.ModuleTechRefractory;
+import com.codetaylor.mc.pyrotech.modules.tech.basic.plugin.crafttweaker.ZenSoakingPot;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+//import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.api.minecraft.CraftTweakerMC;
+*/
 import net.minecraft.init.Blocks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Loader;
+
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
-import java.io.IOException;
 import java.lang.reflect.Method;
+
+
+
+
 
 @Mod(
         modid = groophite.MODID,
         name = groophite.NAME,
-        version = groophite.VERSION)
+        version = groophite.VERSION,
+dependencies = "required-after:knoothing")
 
 public class groophite
 {
@@ -45,11 +59,15 @@ public class groophite
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) throws Exception {
-        System.out.println(testEnum.class.isEnum());
-        System.out.println(testEnum.class.isEnum());
-        System.out.println(testEnum.class.isEnum());
+/*
+        ZenSoakingPot.addRecipe("test",
+         CraftTweakerMC.getIItemStack(new ItemStack(Items.APPLE)),
+        CraftTweakerMC.getILiquidStack(new FluidStack(FluidRegistry.WATER,1000)),
+                CraftTweakerMC.getIItemStack(new ItemStack(Items.ARROW)), 1000);
 
+*/
         String groophitePackName = this.getClass().getPackage().getName().replace("groophite","groophite.api");
+
         Class[] classes = ModCompatUtils.getClasssFromPackage(groophitePackName).toArray(new Class[0]);
         for (Class clz : classes){
             System.out.println(clz.getName());
@@ -60,12 +78,8 @@ public class groophite
             System.out.println(method);
         }
 
-
-        System.out.println("///////////////////");
-        System.out.println(G_Entity.class.getSuperclass());
-        System.out.println(G_Entity.class.getSuperclass());
-        System.out.println(G_Entity.class.getSuperclass());
-        ModCompatUtils.calcExpose();
+        //ModCompatUtils.expose(com.draming.knoothing.processor.EncryptUtil.class);
+        //ModCompatUtils.calcExpose();
         logger = event.getModLog();
 
 
