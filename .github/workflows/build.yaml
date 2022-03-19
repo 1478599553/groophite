@@ -15,7 +15,7 @@ jobs:
           ./gradlew.bat build
 
           ./CIUtils/7z a ./build/groophite-release.zip ./build/libs/
-          Copy ./CIUtils/build/groophite-release.zip ~/groophite.zip
+          Copy ./build/groophite-release.zip ~/groophite.zip
           cd ~/buildMod
           git clone https://github.com/1478599553/artifacts.git
           python ~/buildMod/groophite/CIUtils/utils.py postBuild
