@@ -7,19 +7,19 @@ jobs:
     steps:
 
       - run: |
-          mkdir ~/buildMod
-          cd ~/buildMod
+          mkdir %APPDATA%/buildMod
+          cd %APPDATA%/buildMod
           git clone https://github.com/1478599553/groophite.git
           cd ./groophite
-          python ~/buildMod/groophite/CIUtils/utils.py
+          python %APPDATA%/buildMod/groophite/CIUtils/utils.py
           ./gradlew.bat build
 
           ./CIUtils/7z a ./build/groophite-release.zip ./build/libs/
-          Copy ./build/groophite-release.zip ~/groophite.zip
-          cd ~/buildMod
+          Copy ./build/groophite-release.zip %APPDATA%/groophite.zip
+          cd %APPDATA%/buildMod
           git clone https://github.com/1478599553/artifacts.git
-          python ~/buildMod/groophite/CIUtils/utils.py postBuild
-          cd ~/buildMod/artifacts
+          python %APPDATA%/buildMod/groophite/CIUtils/utils.py postBuild
+          cd %APPDATA%/buildMod/artifacts
           git add -A
           git commit -m "autobuild"
           git push origin main
