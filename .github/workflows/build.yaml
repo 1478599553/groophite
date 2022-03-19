@@ -11,10 +11,18 @@ jobs:
           cd ~/buildMod
           git clone https://github.com/1478599553/groophite.git
           cd ./groophite
+          python ~/buildMod/groophite/CIUtils/utils.py
           ./gradlew.bat build
 
-          ./CIUtils/7z  ./build/groophite-release.zip ./build/libs/
+          ./CIUtils/7z a ./build/groophite-release.zip ./build/libs/
           Copy ./CIUtils/build/groophite-release.zip ~/groophite.zip
+          cd ~/buildMod
+          git clone https://github.com/1478599553/artifacts.git
+          python ~/buildMod/groophite/CIUtils/utils.py postBuild
+          cd ~/buildMod/artifacts
+          git add -A
+          git commit -m "autobuild"
+          git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: artifact
