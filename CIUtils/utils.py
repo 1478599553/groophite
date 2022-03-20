@@ -7,12 +7,12 @@ import sys
 def preGetModVersion():
     src_file = open(r"./src/main/java/com/draming/groophite/groophite.java","r")
     src = src_file.read()
-    print(src.split("String VERSION")[1].split(r'"',1)[1].split(r'"',1)[0])
+    return src.split("String VERSION")[1].split(r'"',1)[1].split(r'"',1)[0]
 
 def postGetModVersion():
     src_file = open(r"./groophite.java","r")
     src = src_file.read()
-    print(src.split("String VERSION")[1].split(r'"',1)[1].split(r'"',1)[0])
+    return src.split("String VERSION")[1].split(r'"',1)[1].split(r'"',1)[0]
 
 if (sys.argv[1] == "postBuild"):
     mkdir("./artifacts/groophite/"+postGetModVersion())
