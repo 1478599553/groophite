@@ -1,5 +1,5 @@
 from copy import copy
-from os import mkdir
+from os import mkdirs
 from shutil import copyfile
 import sys
 
@@ -15,7 +15,7 @@ def postGetModVersion():
     return src.split("String VERSION")[1].split(r'"',1)[1].split(r'"',1)[0]
 
 if (sys.argv[1] == "postBuild"):
-    mkdir("./artifacts/groophite/"+postGetModVersion())
+    mkdirs("./artifacts/groophite/"+postGetModVersion())
     copyfile("./groophite-release.zip","./artifacts/groophite/"+postGetModVersion()+"/groophite_mc112_"+postGetModVersion()+".zip")
 
 tempWorkFlow = '''
