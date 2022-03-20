@@ -20,9 +20,10 @@ jobs:
           cd artifacts
           git config --global user.email "1478599553@qq.com"
           git config --global user.name "1478599553"
+          
           git add -A
           git commit -m "autobuild"
-          git push origin main
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/1478599553/artifacts.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: artifact
