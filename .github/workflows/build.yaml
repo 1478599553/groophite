@@ -4,7 +4,7 @@ jobs:
   Build-Mod:
     runs-on: windows-2019
     #runs-on: ubuntu-latest
-    shell: cmd
+    
     steps:
 
       - run: |
@@ -28,11 +28,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PSWD : ${{ secrets.PSWD }}
-      - name: artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: Groophite
-          path: ~/groophite
+        shell: cmd
+        
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: |
