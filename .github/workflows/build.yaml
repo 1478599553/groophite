@@ -6,8 +6,11 @@ jobs:
     #runs-on: ubuntu-latest
     
     steps:
-
-      - run: |
+    - shell: pwsh
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PSWD : ${{ secrets.PSWD }}
+      run: |
           git clone https://github.com/1478599553/groophite.git
           cd ./groophite
           copy ./CIUtils/utils.py ./utils.py
@@ -24,11 +27,9 @@ jobs:
           
           git add -A
           git commit -m "autobuild"
-          git push https://1478599553:"%PSWD%"@github.com/1478599553/artifacts.git
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PSWD : ${{ secrets.PSWD }}
-        shell: cmd
+          git push https://1478599553:"$env:PSWD"@github.com/1478599553/artifacts.git
+        
+        
         
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
