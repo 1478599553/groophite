@@ -4,7 +4,7 @@ jobs:
   Build-Mod:
     runs-on: windows-2019
     #runs-on: ubuntu-latest
-    - shell: cmd
+    shell: cmd
     steps:
 
       - run: |
