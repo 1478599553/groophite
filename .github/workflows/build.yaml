@@ -23,7 +23,7 @@ jobs:
           
           git add -A
           git commit -m "autobuild"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/1478599553/artifacts.git
+          git push https://${GITHUB_TOKEN}@github.com/1478599553/artifacts.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: artifact
