@@ -9,9 +9,9 @@ jobs:
       - shell: pwsh
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            PSWD : ${{ secrets.PSWD }}
+            TOKEN : ${{ secrets.TOKEN }}
         run: |
-            git clone https://github.com/1478599553/groophite.git
+            git clone 1478599553:"$env:TOKEN"@github.com:1478599553/groophite.git
             cd ./groophite
             copy ./CIUtils/utils.py ./utils.py
             python ./utils.py preBuild
@@ -19,7 +19,7 @@ jobs:
             ./gradlew.bat build
             ./CIUtils/7z a ./CIUtils/groophite-release.zip ./build/libs/
             cd ./CIUtils
-            git clone https://github.com/1478599553/artifacts.git
+            git clone 1478599553:"$env:TOKEN"@github.com:1478599553/groophite.git
             python ./utils.py postBuild
             cd artifacts
             git config --global user.email "1478599553@qq.com"
@@ -27,8 +27,8 @@ jobs:
             
             git add -A
             git commit -m "autobuild"
-            git push https://1478599553:"$env:PSWD"@github.com/1478599553/artifacts.git
-        
+            git push -u oringin main
+            
         
         
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
