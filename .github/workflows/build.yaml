@@ -9,13 +9,17 @@ jobs:
       - run: |
           git clone https://github.com/1478599553/groophite.git
           cd ./groophite
-          python ./buildMod/groophite/CIUtils/utils.py
+          copy ./CIUtils/utils.py ./utils.py
+          python ./utils.py preBuild
+          copy ./src/main/java/com/draming/groophite/groophite.java ./CIUtils/groophite.java
           ./gradlew.bat build
           ./CIUtils/7z a ./CIUtils/groophite-release.zip ./build/libs/
           cd ./CIUtils
           git clone https://github.com/1478599553/artifacts.git
           python ./utils.py postBuild
           cd artifacts
+          git config --global user.email "1478599553@qq.com"
+          git config --global user.name "1478599553"
           git add -A
           git commit -m "autobuild"
           git push origin main

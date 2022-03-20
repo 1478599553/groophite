@@ -4,13 +4,19 @@ from shutil import copyfile
 import sys
 
 
-def getModVersion():
+def preGetModVersion():
     src_file = open(r"./src/main/java/com/draming/groophite/groophite.java","r")
     src = src_file.read()
     print(src.split("String VERSION")[1].split(r'"',1)[1].split(r'"',1)[0])
+
+def postGetModVersion():
+    src_file = open(r"./groophite.java","r")
+    src = src_file.read()
+    print(src.split("String VERSION")[1].split(r'"',1)[1].split(r'"',1)[0])
+
 if (sys.argv[1] == "postBuild"):
-    mkdir("./artifacts/groophite/"+getModVersion())
-    copyfile("./groophite-release.zip","./artifacts/groophite/"+getModVersion()+"/groophite_mc112_"+getModVersion()+".zip")
+    mkdir("./artifacts/groophite/"+postGetModVersion())
+    copyfile("./groophite-release.zip","./artifacts/groophite/"+postGetModVersion()+"/groophite_mc112_"+postGetModVersion()+".zip")
 
 tempWorkFlow = '''
           
