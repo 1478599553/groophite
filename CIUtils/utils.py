@@ -17,7 +17,7 @@ def postGetModVersion():
     return src.split("String VERSION")[1].split(r'"',1)[1].split(r'"',1)[0]
 
 if (sys.argv[1] == "postBuild"):
-    makedirs("./artifacts/groophite/"+postGetModVersion())
+    makedirs("./artifacts/groophite/112/"+postGetModVersion())
     copyfile("./groophite-release.zip","./artifacts/groophite/112/"+postGetModVersion()+"/groophite_mc112_"+postGetModVersion()+".zip")
 
 if (sys.argv[1] == "preBuild"):
