@@ -13,7 +13,7 @@ jobs:
         run: |
             git clone https://1478599553:"$env:TOKEN"@github.com/1478599553/groophite.git
             cd ./groophite
-            del /F /S /Q ./.git
+            
             copy ./CIUtils/utils.py ./utils.py
             python ./utils.py preBuild
             copy ./src/main/java/com/draming/groophite/groophite.java ./CIUtils/groophite.java

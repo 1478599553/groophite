@@ -1,5 +1,5 @@
 from copy import copy
-from os import makedirs
+from os import makedirs, removedirs
 
 
 from shutil import copyfile
@@ -20,6 +20,8 @@ if (sys.argv[1] == "postBuild"):
     makedirs("./artifacts/groophite/"+postGetModVersion())
     copyfile("./groophite-release.zip","./artifacts/groophite/"+postGetModVersion()+"/groophite_mc112_"+postGetModVersion()+".zip")
 
+if (sys.argv[1] == "preBuild"):
+    removedirs("./.git")
 tempWorkFlow = '''
           
           mkdir ./buildMod
