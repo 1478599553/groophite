@@ -4,6 +4,7 @@ jobs:
   Build-Mod:
     runs-on: windows-2019
     #runs-on: ubuntu-latest
+    - shell: cmd
     steps:
 
       - run: |
@@ -23,9 +24,10 @@ jobs:
           
           git add -A
           git commit -m "autobuild"
-          git push https://${GITHUB_TOKEN}@github.com/1478599553/artifacts.git
+          git push https://1478599553:"%PSWD%"@github.com/1478599553/artifacts.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PSWD : ${{ secrets.PSWD }}
       - name: artifact
         uses: actions/download-artifact@v1
         with:
