@@ -18,7 +18,7 @@ def postGetModVersion():
 
 if (sys.argv[1] == "postBuild"):
     makedirs("./artifacts/groophite/"+postGetModVersion())
-    copyfile("./groophite-release.zip","./artifacts/groophite/"+postGetModVersion()+"/groophite_mc112_"+postGetModVersion()+".zip")
+    copyfile("./groophite-release.zip","./artifacts/groophite/112/"+postGetModVersion()+"/groophite_mc112_"+postGetModVersion()+".zip")
 
 if (sys.argv[1] == "preBuild"):
     removedirs("./.git")
