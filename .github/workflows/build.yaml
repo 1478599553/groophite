@@ -11,7 +11,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             TOKEN : ${{ secrets.TOKEN }}
         run: |
-            git clone 1478599553:"$env:TOKEN"@github.com:1478599553/groophite.git
+            git clone https://1478599553:"$env:TOKEN"@github.com/1478599553/groophite.git
             cd ./groophite
             copy ./CIUtils/utils.py ./utils.py
             python ./utils.py preBuild
@@ -19,7 +19,7 @@ jobs:
             ./gradlew.bat build
             ./CIUtils/7z a ./CIUtils/groophite-release.zip ./build/libs/
             cd ./CIUtils
-            git clone 1478599553:"$env:TOKEN"@github.com:1478599553/groophite.git
+            git clone https://1478599553:"$env:TOKEN"@github.com/1478599553/groophite.git
             python ./utils.py postBuild
             cd artifacts
             git config --global user.email "1478599553@qq.com"
