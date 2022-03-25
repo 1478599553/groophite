@@ -31,6 +31,7 @@ if (sys.argv[1] == "preBuild"):
             gradleContent[i] = "version = "+"'"+preGetModVersion()+"'"
             break
         i = i + 1
+    print(gradleContent)
     writeGradleFile = open("./build.gradle","w")
     writeGradleFile.writelines(gradleContent)
     writeGradleFile.close()
