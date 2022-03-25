@@ -47,7 +47,7 @@ public class groophite
 {
     public static final String MODID = "groophite";
     public static final String NAME = "Groophite";
-    public static final String VERSION = "0.9.2";
+    public static final String VERSION = "0.9.3";
     @Mod.Instance
     public static groophite Instance;
 

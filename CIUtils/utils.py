@@ -21,7 +21,7 @@ if (sys.argv[1] == "postBuild"):
     copyfile("./groophite-release.zip","./artifacts/groophite/112/"+postGetModVersion()+"/groophite_mc112_"+postGetModVersion()+".zip")
 
 if (sys.argv[1] == "preBuild"):
-    removedirs("./.git")
+    #removedirs("./.git")
     gradleFile = open("./build.gradle","r")
     gradleContent =  gradleFile.readlines()
     gradleFile.close()
