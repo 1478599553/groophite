@@ -2,9 +2,11 @@ package com.draming.groophite;
 
 
 
+import com.codetaylor.mc.pyrotech.modules.tech.basic.plugin.crafttweaker.ZenSoakingPot;
 import com.draming.groophite.api.G_EntityPlayer;
 import com.draming.groophite.inGame.CommandRoot;
 import com.draming.groophite.modsCompat.ModCompatUtils;
+
 /*
 //import com.codetaylor.mc.pyrotech.modules.tech.basic.plugin.crafttweaker.ZenSoakingPot;
 //import com.codetaylor.mc.pyrotech.modules.tech.refractory.ModuleTechRefractory;
@@ -16,8 +18,10 @@ import net.minecraftforge.fluids.FluidStack;
 //import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 */
+import com.draming.groophite.modsCompat.NeonExpose;
 import net.minecraft.init.Blocks;
 
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -28,10 +32,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
+import java.io.File;
 import java.lang.reflect.Method;
-
-
-
+import java.util.Objects;
 
 
 @Mod(
@@ -44,7 +47,7 @@ public class groophite
 {
     public static final String MODID = "groophite";
     public static final String NAME = "Groophite";
-    public static final String VERSION = "0.9";
+    public static final String VERSION = "0.9.1";
     @Mod.Instance
     public static groophite Instance;
 
@@ -66,6 +69,7 @@ public class groophite
                 CraftTweakerMC.getIItemStack(new ItemStack(Items.ARROW)), 1000);
 
 */
+        /*
         String groophitePackName = this.getClass().getPackage().getName().replace("groophite","groophite.api");
 
         Class[] classes = ModCompatUtils.getClasssFromPackage(groophitePackName).toArray(new Class[0]);
@@ -77,11 +81,14 @@ public class groophite
         for (Method method : G_EntityPlayer.class.getMethods()){
             System.out.println(method);
         }
-
+*/
         //ModCompatUtils.expose(com.draming.knoothing.processor.EncryptUtil.class);
         //ModCompatUtils.calcExpose();
-        logger = event.getModLog();
 
+        logger = event.getModLog();
+        boolean isCraftTweakerLoaded = Loader.isModLoaded("crafttweaker");
+
+        NeonExpose.expose(isCraftTweakerLoaded);
 
         new com.draming.groophite.processor.GroovyProcessor();
 

@@ -22,6 +22,19 @@ if (sys.argv[1] == "postBuild"):
 
 if (sys.argv[1] == "preBuild"):
     removedirs("./.git")
+    gradleFile = open("./build.gradle","r")
+    gradleContent =  gradleFile.readlines()
+    gradleFile.close()
+    i = 0
+    for line in gradleContent:
+        if line.endswith("VersionMark"):
+            gradleContent[i] = "version = "+"'"+preGetModVersion+"'"
+            break
+        i = i + 1
+    writeGradleFile = open("./build.gradle","w")
+    writeGradleFile.writelines(gradleContent)
+    writeGradleFile.close()
+
 tempWorkFlow = '''
           
           mkdir ./buildMod

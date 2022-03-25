@@ -15,7 +15,8 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0'
+
+version = '1.0'//VersionMark
 group = 'com.draming.groophite' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Groophite-mc1.12.2'
 
@@ -93,10 +94,14 @@ dependencies {
 
 
     deobf 'com.draming.knoothing:Knoothing:1.0'
+
+    //TODO do not run the game with CrT in develop env.
     deobf 'crafttweaker.mc1120:crafttweaker2'
+
     deobf 'com.youknowwho:athenaeum'
     deobf 'com.youknowwho:dropt'
     deobf 'com.codetaylor.mc.pyrotech:pyrotech'
+
     /*
 
     //deobf 'com.youknowwho:jei'
@@ -119,6 +124,7 @@ jar {
     //from configurations.provided.files.collect { zipTree(it) }
     manifest {
         attributes([
+            
             "Specification-Title": "",
             "Specification-Vendor": "",
             "Specification-Version": "", // We are version 1 of ourselves
