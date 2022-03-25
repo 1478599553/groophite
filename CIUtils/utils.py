@@ -27,7 +27,7 @@ if (sys.argv[1] == "preBuild"):
     gradleFile.close()
     i = 0
     for line in gradleContent:
-        if line.endswith("VersionMark"):
+        if line.endswith("VersionMark\n"):
             gradleContent[i] = "version = "+"'"+preGetModVersion+"'"
             break
         i = i + 1
