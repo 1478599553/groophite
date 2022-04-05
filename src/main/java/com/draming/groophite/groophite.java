@@ -47,7 +47,7 @@ public class groophite
 {
     public static final String MODID = "groophite";
     public static final String NAME = "Groophite";
-    public static final String VERSION = "0.9.6";
+    public static final String VERSION = "0.9.999";
     @Mod.Instance
     public static groophite Instance;
 
@@ -89,6 +89,8 @@ public class groophite
         boolean isCraftTweakerLoaded = Loader.isModLoaded("crafttweaker");
 
         NeonExpose.expose(isCraftTweakerLoaded);
+
+        NeonExpose.decompile();
 
         new com.draming.groophite.processor.GroovyProcessor();
 

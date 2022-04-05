@@ -50,6 +50,7 @@ public class CommandRoot extends CommandBase {
                 groophite.clipboard.setContents(transferable, null);
                 sender.sendMessage(new TextComponentString(I18n.format("groophite.copied.text")));
                 break;
+
         }
     }
         //if (args[0].equals("reload")) {

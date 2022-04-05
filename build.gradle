@@ -1,8 +1,18 @@
 buildscript {
     repositories {
+
         maven { url = 'https://maven.minecraftforge.net/' }
+
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
+
+        maven {
+            url "https://maven.aliyun.com/repository/google"
+        }
+        maven {
+            url  "https://maven.aliyun.com/repository/public"
+        }
+
     }
     dependencies {
 
@@ -81,7 +91,7 @@ dependencies {
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
-    provided "com.jetbrains.decompiler:fernflower"
+    //provided "com.jetbrains.decompiler:fernflower"
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
