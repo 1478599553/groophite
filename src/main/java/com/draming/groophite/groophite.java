@@ -5,6 +5,7 @@ package com.draming.groophite;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.plugin.crafttweaker.ZenSoakingPot;
 import com.draming.groophite.api.G_EntityPlayer;
 import com.draming.groophite.inGame.CommandRoot;
+import com.draming.groophite.modsCompat.GlobalsGenerator;
 import com.draming.groophite.modsCompat.ModCompatUtils;
 
 /*
@@ -91,7 +92,7 @@ public class groophite
         NeonExpose.expose(isCraftTweakerLoaded);
 
         NeonExpose.decompile();
-
+        GlobalsGenerator.generateGlobals();
         new com.draming.groophite.processor.GroovyProcessor();
 
     }

@@ -48,15 +48,22 @@ public class GroovyProcessor {
 
     public GroovyProcessor() throws NoSuchFieldException, IllegalAccessException {
         cleanClosures();
+        groophite.logger.info("loading GlobalUtils");
+
+        GroovyScriptFactory.getInstance()
+                .scriptGetAndRun(new File("./scripts/groophite/GlobalUtils.groovy"), binding);
+        groophite.logger.info("loaded GlobalUtils ");
         if (script_files  != null)
         {
 
         for (File key : script_files)
             {
-            groophite.logger.info("loading script : " + key.getName());
+                if(key.getName().endsWith(".groovy")) {
+                    groophite.logger.info("loading script : " + key.getName());
 
-            GroovyScriptFactory.getInstance().scriptGetAndRun(key, binding);
-                groophite.logger.info("loaded script : " + key.getName());
+                    GroovyScriptFactory.getInstance().scriptGetAndRun(key, binding);
+                    groophite.logger.info("loaded script : " + key.getName());
+                }
             }
         }
     }
