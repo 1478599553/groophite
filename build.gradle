@@ -76,6 +76,7 @@ configurations {
 
 repositories {
     maven { url = 'https://maven.minecraftforge.net/' }
+
     mavenCentral()
     flatDir {
         dir 'libs'
@@ -131,10 +132,12 @@ dependencies {
 
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
+
     //from configurations.provided.files.collect { zipTree(it) }
     manifest {
+
         attributes([
-            
+
             "Specification-Title": "",
             "Specification-Vendor": "",
             "Specification-Version": "", // We are version 1 of ourselves

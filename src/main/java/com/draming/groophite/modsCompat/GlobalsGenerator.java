@@ -1,12 +1,17 @@
 package com.draming.groophite.modsCompat;
 
+import com.draming.groophite.api.Getters;
+import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.api.oredict.IngredientOreDict;
 import net.minecraft.client.util.SearchTree;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -28,6 +33,12 @@ public class GlobalsGenerator {
             "     static IItemStack itemStack(String name){\n" +
             "         Getters.getIItemStackByName(name,1)\n" +
             "     }\n" +
+            "     static IItemStack itemStack(String name,int meta){\n" +
+            "         Getters.getIItemStackByName(name,1,meta)\n" +
+            "     }\n" +
+            "     static IItemStack itemStack(String name,int amount,int meta){\n" +
+            "         Getters.getIItemStackByName(name,amount,meta)\n" +
+            "     }\n" +
             "\n" +
             "     @Override\n" +
             "     Object run() {\n" +
@@ -38,18 +49,29 @@ public class GlobalsGenerator {
     public static void generateGlobals() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(someForeTemp);
+
         ForgeRegistries.ITEMS.forEach((Item item )-> {
             stringBuilder.append(ModCompatUtils.lineSeparator);
-                if (!stringBuilder.toString().contains("IItemStack "+item.getRegistryName().getResourcePath())) {
-                    stringBuilder.append("public final IItemStack ").append(item.getRegistryName().getResourcePath()).append(" = itemStack '").append(item.getRegistryName()).append("'");
+                if (!stringBuilder.toString().contains("String "+item.getRegistryName().getResourcePath())) {
+                    stringBuilder
+                            .append("public final String ")
+                            .append(item.getRegistryName().getResourcePath().replace(".","_"))
+                            .append(" = '")
+                            .append(item.getRegistryName())
+                            .append("'");
                 }
                 else
                 {
-                    stringBuilder.append("public final IItemStack ").append(item.getRegistryName().toString().replace(":", "_")).append(" = itemStack '").append(item.getRegistryName()).append("'");
+                    stringBuilder.append("public final String ")
+                            .append(item.getRegistryName().toString().replace(":", "_").replace(".","_"))
+                            .append(" = '")
+                            .append(item.getRegistryName())
+                            .append("'");
                 }
             stringBuilder.append(ModCompatUtils.lineSeparator);
         });
         stringBuilder.append("}");
+
         FileUtils
                 .writeStringToFile
                         (

@@ -19,7 +19,9 @@ public class GroovyScriptFactory {
     private static GroovyScriptFactory factory = new GroovyScriptFactory();
     EncryptUtil encryptUtil = new EncryptUtil();
     
-    private GroovyScriptFactory(){}
+    private GroovyScriptFactory(){
+        this.classLoader.addClasspath("./scripts/groophite");
+    }
 
     public static GroovyScriptFactory getInstance(){
         return factory;

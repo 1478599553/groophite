@@ -1,5 +1,7 @@
 package com.draming.groophite.inGame;
 
+import com.draming.groophite.modsCompat.NeonExpose;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -16,6 +18,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import com.draming.groophite.groophite;
+import net.minecraftforge.fml.common.Loader;
+
 public class CommandRoot extends CommandBase {
     @Override
     public String getName() {
@@ -27,20 +31,16 @@ public class CommandRoot extends CommandBase {
         return "coming soon";
     }
 
-    public final static int code_of_reload = "reload".hashCode();
-    public final static int code_of_regName = "regName".hashCode();
-
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         switch (args[0]) {
             case ("reload"):
                 try {
                     com.draming.groophite.processor.Reloader.reloadScript();
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+
                 sender.sendMessage(new TextComponentString(I18n.format("groophite.reloaded.text")));
                 break;
             case ("regName"):
@@ -50,7 +50,9 @@ public class CommandRoot extends CommandBase {
                 groophite.clipboard.setContents(transferable, null);
                 sender.sendMessage(new TextComponentString(I18n.format("groophite.copied.text")));
                 break;
-
+            case ("dump"):
+                new Thread(new DumpTask(server)).start();
+                break;
         }
     }
         //if (args[0].equals("reload")) {
@@ -63,7 +65,7 @@ public class CommandRoot extends CommandBase {
     {
         if (args.length == 1)
         {
-            String[] cmds = {"reload","regName"};
+            String[] cmds = {"reload","regName","dump"};
             return CommandBase.getListOfStringsMatchingLastWord(args, cmds);
         }
         return null;

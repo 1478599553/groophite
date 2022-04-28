@@ -2,6 +2,8 @@ package com.draming.groophite.processor;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,8 @@ import com.draming.groophite.groophite;
 import groovy.lang.Closure;
 
 import groovy.lang.Binding;
+import groovy.lang.GroovyClassLoader;
+import org.apache.commons.io.FileUtils;
 
 
 public class GroovyProcessor {
@@ -46,23 +50,22 @@ public class GroovyProcessor {
         //TODO add more cleaning entries!
     }
 
-    public GroovyProcessor() throws NoSuchFieldException, IllegalAccessException {
+    public GroovyProcessor() throws NoSuchFieldException, IllegalAccessException, ClassNotFoundException, IOException {
         cleanClosures();
-        groophite.logger.info("loading GlobalUtils");
 
-        GroovyScriptFactory.getInstance()
-                .scriptGetAndRun(new File("./scripts/groophite/GlobalUtils.groovy"), binding);
-        groophite.logger.info("loaded GlobalUtils ");
         if (script_files  != null)
         {
 
         for (File key : script_files)
             {
                 if(key.getName().endsWith(".groovy")) {
+
+
                     groophite.logger.info("loading script : " + key.getName());
 
                     GroovyScriptFactory.getInstance().scriptGetAndRun(key, binding);
                     groophite.logger.info("loaded script : " + key.getName());
+
                 }
             }
         }

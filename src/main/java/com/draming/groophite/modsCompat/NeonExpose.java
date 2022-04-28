@@ -11,10 +11,7 @@ import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
 import scala.tools.nsc.io.Jar;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -80,12 +77,7 @@ public class NeonExpose {
                                     .replace("/", ".")
                                     .replace(".class", "");
 
-
-
                             Class clazz;
-
-
-
                             try {
                                 clazz = Class.forName(className);
                             }
@@ -110,8 +102,15 @@ public class NeonExpose {
                                             = (stanhebben.zenscript.annotations.ZenClass)
                                             clazz.getAnnotation
                                                     (stanhebben.zenscript.annotations.ZenClass.class);
+                                    Groophite_Expose groophite_expose = (Groophite_Expose) clazz.getAnnotation(Groophite_Expose.class);
 
-                                    if (zenClass != null || clazz.getPackage().getName().contains("groophite.api")) {
+                                    if (
+                                            zenClass != null
+                                            ||
+                                            clazz.getPackage().getName().contains("groophite.api")
+                                            ||
+                                            groophite_expose!= null
+                                        ) {
                                         System.out.println("Exposing class: " + className);
                                         writeToLocal("./scripts/groophite/" + entry.getName(), stream);
                                         Enumeration<JarEntry> entryEnumeration = jarFile.entries();
@@ -186,26 +185,27 @@ public class NeonExpose {
              if (clazzList.size() > 1){
                  List<String> argsList = new ArrayList<>();
                  for (File file : clazzList){
-                     argsList.add(file.getCanonicalPath()
-                             .replace("\\.\\","/"));
+                     argsList.add(file.getCanonicalPath());
                      //.replace("$","\"$\""))
-
                  }
-                 argsList.add(clazzList.get(0).getParentFile().getCanonicalPath().replace("\\.\\","/"));
-                 String[] argsArray;
-                 argsArray = argsList.toArray(new String[0]);
-                    System.out.println(Arrays.toString(argsArray));
+                 argsList.add(clazzList.get(0).getParentFile().getCanonicalPath());
+
+                 String[] argsArray = argsList.toArray(new String[0]);
+
                  ConsoleDecompiler.main(argsArray);
 
              }
              else{
+                 if (clazzList.size() != 0) {
+                     String[] argArray = {
+                             clazzList.get(0).getCanonicalPath(),
+                             clazzList.get(0).getParentFile().getCanonicalPath()
+                     };
 
-                 ConsoleDecompiler.main(
-                         new String[]{
-                                 clazzList.get(0).getCanonicalPath().replace("\\.\\","/")
-                                         .replace("$","\"$\""),
-                                 clazzList.get(0).getParentFile().getCanonicalPath().replace("\\.\\","/")});
+                     ConsoleDecompiler.main(argArray);
+                 }
              }
+
          }
     }
 
@@ -230,7 +230,7 @@ public class NeonExpose {
                                     .getName()
                                     .split("/").length - 1]
                                     .replace(".class", "");
-                            System.out.println("Pure name is: "+subFilePureName);
+
                             File[] theBrotherFiles = subFile.getParentFile().listFiles();
                             if (theBrotherFiles != null) {
                                 for (File brotherFile : theBrotherFiles) {
@@ -247,11 +247,11 @@ public class NeonExpose {
                         //clazz.add(subFile);
                         //classes.add(clazz);
                     }
-                }
-                else{
-                    if (subFile.isDirectory()){
-                        findClass(subFile.getPath());
-                    }
+                                    }
+                                    else{
+                                        if (subFile.isDirectory()){
+                                            findClass(subFile.getPath());
+                                        }
                 }
             }
         }

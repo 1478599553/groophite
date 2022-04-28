@@ -41,6 +41,15 @@ public class Getters {
         }
     }
     @Nullable
+    public static IItemStack getIItemStackByName(String name,int amount,int meta){
+        if (Item.getByNameOrId(name)!=null) {
+            return CraftTweakerMC.getIItemStack(new ItemStack(Item.getByNameOrId(name), amount,meta));
+        }else {
+            groophite.logger.error("Item with name: "+name+" and meta: "+meta+" not found!");
+            return null;
+        }
+    }
+    @Nullable
     public static ILiquidStack getILiquidStackByName(String name, int amount){
         if (Item.getByNameOrId(name)!=null) {
             return CraftTweakerMC.getILiquidStack(new FluidStack(FluidRegistry.getFluid(name),amount));
@@ -49,5 +58,6 @@ public class Getters {
             return null;
         }
     }
+
 
 }
