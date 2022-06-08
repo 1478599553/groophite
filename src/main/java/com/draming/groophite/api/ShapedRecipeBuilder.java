@@ -1,5 +1,7 @@
 package com.draming.groophite.api;
 
+import com.draming.groophite.api.archived.G_Item;
+import com.draming.groophite.api.archived.G_ItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -27,7 +29,7 @@ public class ShapedRecipeBuilder {
     public void setShape(String... shape){
         this.shapes = shape;
     }
-    public void setMap(String placeHolderChar,G_Item item){
+    public void setMap(String placeHolderChar, G_Item item){
         this.maps.add(placeHolderChar.charAt(0),item.__innerItem);
     }
 

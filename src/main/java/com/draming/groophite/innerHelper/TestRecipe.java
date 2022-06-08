@@ -1,7 +1,6 @@
 package com.draming.groophite.innerHelper;
 
-import com.draming.groophite.api.G_ItemStack;
-import net.minecraft.init.Blocks;
+import com.draming.groophite.api.archived.G_ItemStack;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

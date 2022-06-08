@@ -5,6 +5,8 @@ package com.draming.groophite.modsCompat;
 
 
 
+import crafttweaker.annotations.BracketHandler;
+import crafttweaker.api.recipes.IRecipeManager;
 import org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.tree.AnnotationNode;
@@ -29,7 +31,7 @@ import java.util.zip.ZipFile;
 
 public class NeonExpose {
     //TODO remember to edit this to "./mods".
-    public static Path modsPath = Paths.get("mods");
+    public static Path modsPath = Paths.get("./mods");
     public static List<String> packageNames = new ArrayList<>();
     public static List<String> uselessFilesAndFolders =
             Stream.of("assets","META-INF","mcmod.info","pack.mcmeta")
@@ -103,14 +105,21 @@ public class NeonExpose {
                                             clazz.getAnnotation
                                                     (stanhebben.zenscript.annotations.ZenClass.class);
                                     Groophite_Expose groophite_expose = (Groophite_Expose) clazz.getAnnotation(Groophite_Expose.class);
-
+                                    BracketHandler bracketHandler = (BracketHandler) clazz.getAnnotation(BracketHandler.class);
                                     if (
                                             zenClass != null
                                             ||
                                             clazz.getPackage().getName().contains("groophite.api")
+                                                    ||
+                                                    clazz.getPackage().getName().contains("crafttweaker.mc1120.events.handling")
                                             ||
+                                                    clazz.getPackage().getName().contains("crafttweaker.api")
+                                                    ||
+                                                    bracketHandler != null
+                                                    ||
                                             groophite_expose!= null
                                         ) {
+
                                         System.out.println("Exposing class: " + className);
                                         writeToLocal("./scripts/groophite/" + entry.getName(), stream);
                                         Enumeration<JarEntry> entryEnumeration = jarFile.entries();
@@ -128,9 +137,9 @@ public class NeonExpose {
                                 }
 /*
                                 ClassReader reader = new ClassReader(stream);
-                                ClassNode cn = new ClassNode();//创建ClassNode,读取的信息会封装到这个类里面
-                                reader.accept(cn, 0);//开始读取
-                                List<AnnotationNode> annotations = cn.visibleAnnotations;//获取声明的所有注解
+                                ClassNode cn = new ClassNode();
+                                reader.accept(cn, 0);
+                                List<AnnotationNode> annotations = cn.visibleAnnotations;
                                 if (annotations != null){
                                     for (AnnotationNode annotationNode : annotations){
                                         String anno = annotationNode.desc.replaceAll("/", ".");
