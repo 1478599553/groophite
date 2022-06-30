@@ -61,6 +61,12 @@ public class GroovyScriptFactory {
     }
 
     public Object scriptGetAndRun(File file, Binding binding) {
-        return run(getScript(file), binding);
+        Object result = "Fail to exec this script.";
+        try {
+           result =  run(getScript(file), binding);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 }
